@@ -1,5 +1,12 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import emailjs from "@emailjs/browser";
+import {
+  motion,
+  useScroll,
+  useSpring,
+  AnimatePresence,
+  useInView,
+} from "framer-motion";
 
 // import components
 import DownloadButton from "../common/components/DownloadButton/DownloadButton";
@@ -11,26 +18,12 @@ import Loader from "../common/components/Loader/Loader";
 import cv from "../assets/files/cv.pdf";
 
 // import icons
-import { FaReact } from "react-icons/fa";
-import {
-  AiFillGithub,
-  AiFillLinkedin,
-  AiFillHtml5,
-  AiOutlineEye,
-} from "react-icons/ai";
+import { AiFillGithub, AiFillLinkedin, AiOutlineEye } from "react-icons/ai";
 import { FaCode, FaLaptopCode, FaBook } from "react-icons/fa";
-import {
-  BiLogoGmail,
-  BiLogoCss3,
-  BiLogoJavascript,
-  BiLogoRedux,
-  BiLogoJava,
-} from "react-icons/bi";
-import { BsFacebook, BsGit, BsPuzzle } from "react-icons/bs";
-import { TbBrandCpp } from "react-icons/tb";
-import { FaMobileAlt } from "react-icons/fa";
 import { RiSendPlaneFill } from "react-icons/ri";
-import { SiTypescript, SiRecoil, SiReactquery } from "react-icons/si";
+// Import other skill icons as needed, e.g.:
+// import { FaHtml5, FaCss3Alt, FaJsSquare, FaReact, FaNodeJs, FaGitAlt, FaJava, FaPython } from "react-icons/fa";
+// import { SiMongodb, SiMysql, SiExpress } from "react-icons/si";
 
 //import images
 import foodapp from "../assets/images/foodapp.png";
@@ -38,444 +31,661 @@ import chat from "../assets/images/chat.png";
 import payswift from "../assets/images/payswift.png";
 import proctorer from "../assets/images/proctorer.png";
 import ipl from "../assets/images/ipl.png";
+import profilePhoto from "../assets/images/profile_photo.jpg";
 
 // import style
 import style from "./App.module.css";
-import clsx from "clsx";
 
-const skills = [
-  {
-    name: "HTML 5",
-    cssName: "html",
-  },
-  {
-    name: "CSS 3",
-    cssName: "css",
-  },
-  {
-    name: "Java Script",
-    cssName: "java-script",
-  },
-  {
-    name: "ReactJs",
-    cssName: "react",
-  },
-  {
-    name: "NodeJs",
-    cssName: "react",
-  },
-  {
-    name: "Express",
-    cssName: "react",
-  },
-  {
-    name: "MongoDb",
-    cssName: "react",
-  },
-  {
-    name: "MySQL",
-    cssName: "react",
-  },
+const sdeSkills = [
+  { name: "HTML 5", cssName: "html" /* icon: <FaHtml5 /> */ },
+  { name: "CSS 3", cssName: "css" /* icon: <FaCss3Alt /> */ },
+  { name: "JavaScript", cssName: "java-script" /* icon: <FaJsSquare /> */ },
+  { name: "ReactJs", cssName: "react" /* icon: <FaReact /> */ },
+  { name: "NodeJs", cssName: "nodejs" /* icon: <FaNodeJs /> */ },
+  { name: "Express", cssName: "express" /* icon: <SiExpress /> */ },
+  { name: "MongoDB", cssName: "mongodb" /* icon: <SiMongodb /> */ },
+  { name: "MySQL", cssName: "mysql" /* icon: <SiMysql /> */ },
+  { name: "Git", cssName: "git" /* icon: <FaGitAlt /> */ },
+  { name: "Java", cssName: "java" /* icon: <FaJava /> */ },
+  { name: "C", cssName: "c-lang" }, // Changed cssName for C
+  { name: "Problem Solving", cssName: "problem-solving" },
+  { name: "Data Structures", cssName: "data-structures" },
+  { name: "Algorithms", cssName: "algorithms" },
+];
 
-  {
-    name: "Git",
-    cssName: "git",
-  },
-  {
-    name: "java",
-    cssName: "java",
-  },
-  {
-    name: "python",
-    cssName: "java",
-  },
-  {
-    name: "c",
-    cssName: "java",
-  },
-  {
-    name: "Problem Solving",
-    cssName: "problem-solving",
-  },
-  {
-    name: "Data Structures",
-    cssName: "problem-solving",
-  },
-  {
-    name: "Algorithms",
-    cssName: "problem-solving",
-  },
+const mlAiSkills = [
+  { name: "Python", cssName: "python" /* icon: <FaPython /> */ },
+  { name: "NumPy", cssName: "numpy" },
+  { name: "Pandas", cssName: "pandas" },
+  { name: "Matplotlib", cssName: "matplotlib" },
+  { name: "OpenCV", cssName: "opencv" },
+  { name: "TensorFlow", cssName: "tensorflow" },
+  { name: "Scikit-learn", cssName: "scikit-learn" },
+  { name: "Streamlit", cssName: "streamlit" },
+  { name: "Flask", cssName: "flask" },
+  { name: "Machine Learning", cssName: "machine-learning" },
+  { name: "Deep Learning", cssName: "deep-learning" },
+  { name: "Generative AI", cssName: "generative-ai" },
 ];
 
 const projects = [
   {
     name: "PaySwift",
-    link: "https://youtu.be/B59wr91VqMA",
+    link: "https://youtu.be/Vf2rteZizIE",
     github: "https://github.com/Balu2200/PaySwift-Frontend",
     description:
-      "This is a full-stack Payment web application built using the MERN (MongoDB, Express, React, Node.js) stack with Tailwind CSS for styling. The platform enables users to transfer money, manage accounts, view transaction history, schedule automatic payments, and interact with an AI-powered chatbot for assistance.",
+      "A full-stack MERN payment app with Tailwind CSS, enabling money transfers, account management, transaction history, scheduled payments, and an AI chatbot.",
     image: payswift,
+    tags: ["React", "Node.js", "MongoDB", "Express", "AI"],
   },
   {
-    name: `Exam Proctoring`,
+    name: `Exam Proctoring (1st Place Winner)`, // Highlight achievement
     link: "https://youtu.be/ljOCpotcnd0",
     github: "https://github.com/Balu2200/Video_Proctorer",
     description:
-      "AI-Powered Video Proctoring System – IIT Kharagpur HackTank Hackathon (1st Place Winner) Developed an intelligent video proctoring solution designed to uphold exam integrity during remote assessments. Leveraged MediaPipe for facial landmark detection and YOLOv4 for real-time object detection, enabling accurate monitoring of candidates. The system tracks eye movements, head orientation, and mouth activity, while also identifying prohibited objects in the environment. A Tkinter-based GUI was built to offer a user-friendly interface for seamless operation. The project secured 1st place at the prestigious IIT Kharagpur HackTank hackathon.",
+      "AI-powered video proctoring system for exam integrity, using MediaPipe & YOLOv4 for real-time monitoring. Features facial landmark detection, object identification, and a Tkinter GUI.",
     image: proctorer,
+    tags: ["AI", "Python", "MediaPipe", "YOLOv4", "Tkinter"],
   },
   {
     name: "Chat with Docs",
-    link: "https://ibrahimhiarea.github.io/Soko-Number/",
+    link: "https://ibrahimhiarea.github.io/Soko-Number/", // Update if this is the correct demo link
     github: "https://github.com/Balu2200/Chat_with_PDFs",
     description:
-      "Chat with MultiPDFs is an interactive Streamlit-based web application designed to enable users to upload multiple PDF documents, process their content, and engage in a conversational question-answering experience. The application leverages advanced natural language processing (NLP) and vector search technologies to provide accurate and contextually relevant responses based on the uploaded documents.",
+      "Interactive Streamlit app for uploading multiple PDFs and engaging in conversational Q&A using NLP and vector search for contextually relevant responses.",
     image: chat,
+    tags: ["Python", "Streamlit", "NLP", "AI"],
   },
   {
     name: "IPL Winning Predictor",
     link: "https://iplwinningprobabilityprediction-ms8ltqzzcraey5jbrrwztu.streamlit.app/",
     github: "https://github.com/Balu2200/IPL_winning_probability_prediction",
     description:
-      "The IPL Win Predictor is a Streamlit web app that predicts a cricket team's winning probability in an IPL match using real-time data like scores, overs, wickets, and player stats. Users choose from machine learning models (e.g., Logistic Regression, Random Forest) for predictions and view player statistics, match metrics, and visualizations like progress bars and charts, creating an engaging experience for cricket fans.",
+      "Streamlit web app predicting IPL match outcomes using real-time data and ML models. Features player stats, match metrics, and visualizations.",
     image: ipl,
+    tags: ["Python", "Streamlit", "Machine Learning"],
   },
   {
     name: "Food App",
     link: "https://youtu.be/n7OfJ2h7G3c",
-    github: "https://github.com/Balu2200/FoodApp",
+    github: "https://github.com/Balu2200/BiteBuddy-Food-App",
     description:
-      "The MERN Food App is a dynamic web application built with MongoDB, Express.js, React, and Node.js, offering a seamless food discovery experience. Users can search restaurants by name, ID, location (using latitude/longitude), or by uploading images of restaurants, and explore a vibrant home page feed featuring trending restaurants and dishes. With a responsive UIand robust backend,  it’s perfect for food lovers seeking nearby dining options.",
+      "MERN stack food discovery app allowing users to search restaurants by name, location, or image uploads, with a dynamic feed of trending options.",
     image: foodapp,
+    tags: ["React", "Node.js", "MongoDB", "Express"],
   },
 ];
 
+// Animation Variants
+const sectionVariant = {
+  hidden: { opacity: 0, y: 50 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.6, ease: "easeOut" },
+  },
+};
+
+const itemVariant = {
+  hidden: { opacity: 0, y: 25, scale: 0.95 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    scale: 1,
+    transition: { duration: 0.5, ease: [0.25, 0.1, 0.25, 1] },
+  },
+};
+
+const staggerContainerVariant = {
+  hidden: {},
+  visible: {
+    transition: {
+      staggerChildren: 0.15,
+    },
+  },
+};
+
+// Helper component for animating sections on scroll
+const AnimatedSection = ({ children, className, id }) => {
+  const ref = useRef(null);
+  const isInView = useInView(ref, { once: true, amount: 0.2 });
+
+  return (
+    <motion.section
+      id={id}
+      ref={ref}
+      className={className}
+      variants={sectionVariant}
+      initial="hidden"
+      animate={isInView ? "visible" : "hidden"}
+    >
+      {children}
+    </motion.section>
+  );
+};
+
 function App() {
   const form = useRef();
+  const { scrollYProgress } = useScroll();
+  const scaleX = useSpring(scrollYProgress, {
+    stiffness: 120, // Slightly stiffer for a quicker response
+    damping: 35,
+    restDelta: 0.001,
+  });
 
-  const [menu, setMenu] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [emailSent, setEmailSent] = useState(false);
 
   const sendEmail = (e) => {
     e.preventDefault();
     setLoading(true);
+    setEmailSent(false);
 
-    setTimeout(function () {
-      emailjs
-        .sendForm(
-          "service_gjbmeus",
-          "template_qk6p0pa",
-          form.current,
-          "HDMwz57k3xrihLg4J"
-        )
-        .then((result) => {
-          e.target.name.value = "";
-          e.target.email.value = "";
-          e.target.message.value = "";
-        });
-      setLoading(false);
-    }, 2000);
+    emailjs
+      .sendForm(
+        "service_gjbmeus", // Replace with your EmailJS Service ID
+        "template_qk6p0pa", // Replace with your EmailJS Template ID
+        form.current,
+        "HDMwz57k3xrihLg4J" // Replace with your EmailJS Public Key (User ID)
+      )
+      .then(
+        (result) => {
+          console.log(result.text);
+          e.target.reset(); // Clear form fields
+          setLoading(false);
+          setEmailSent(true);
+          setTimeout(() => setEmailSent(false), 4000); // Hide message after 4s
+        },
+        (error) => {
+          console.log(error.text);
+          setLoading(false);
+          // Optionally: show an error message to the user
+        }
+      );
   };
+
+  // Close menu when a link is clicked
+  const handleMenuLinkClick = () => {
+    setMenuOpen(false);
+  };
+
+  useEffect(() => {
+    // Prevent body scroll when menu is open
+    if (menuOpen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "unset";
+    }
+    return () => {
+      document.body.style.overflow = "unset"; // Cleanup on unmount
+    };
+  }, [menuOpen]);
 
   return (
     <div className={style.app}>
+      <motion.div className={style["progress-bar"]} style={{ scaleX }} />
+
       {/* Navbar */}
-      <div className={style.nav}>
-        <a className={style.logo}>
+      <motion.nav
+        className={style.nav}
+        initial={{ y: -100, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        transition={{ type: "spring", stiffness: 80, damping: 20, delay: 0.2 }}
+      >
+        <motion.a
+          href="#Home"
+          className={style.logo}
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.95 }}
+          onClick={handleMenuLinkClick}
+        >
           <h5>Balu Pasumarthi</h5>
-        </a>
-        <ul>
-          <li>
-            <a href="#Home">Home</a>
-          </li>
-          <li>
-            <a href="#About">About</a>
-          </li>
-          <li>
-            <a href="#Projects">Projects</a>
-          </li>
-          <li>
-            <a href="#Contact">Contact</a>
-          </li>
+        </motion.a>
+        <ul className={style["desktop-nav"]}>
+          {" "}
+          {/* For desktop nav items */}
+          {["Home", "About", "Projects", "Contact"].map((item) => (
+            <motion.li
+              key={item}
+              variants={itemVariant}
+              whileHover={{ y: -3 }}
+              whileTap={{ scale: 0.95 }}
+            >
+              <a href={`#${item}`}>{item}</a>
+            </motion.li>
+          ))}
         </ul>
         <div className={style["menu-icon"]}>
-          <input id="checkbox" className={style["checkbox2"]} type="checkbox" />
-          <label
-            className={`${style.toggle} ${style.toggle2}`}
-            for="checkbox"
-            onClick={() => setMenu(!menu)}
-          >
+          <input
+            id="checkbox"
+            className={style.checkbox2}
+            type="checkbox"
+            checked={menuOpen}
+            onChange={() => setMenuOpen(!menuOpen)}
+          />
+          <label className={style.toggle} htmlFor="checkbox">
             <div className={`${style.bars} ${style.bar4}`}></div>
             <div className={`${style.bars} ${style.bar5}`}></div>
             <div className={`${style.bars} ${style.bar6}`}></div>
           </label>
         </div>
-      </div>
-      {menu === true && (
-        <ul className={style.menu}>
-          <li>
-            <a href="#Home">Home</a>
-          </li>
-          <li>
-            <a href="#About">About</a>
-          </li>
-          <li>
-            <a href="#Projects">Projects</a>
-          </li>
-          <li>
-            <a href="#Contact">Contact</a>
-          </li>
-        </ul>
-      )}
-      {/* Home */}
-      <div id="Home" className={style.home}>
-        <div className={style["home-content"]}>
-          <h1>Hi, I am Balu Pasumarthi</h1>
-          <p>
-            Balu Pasumarthi, a B.Tech Computer Science student, excels in Data
-            Structures, Machine Learning and MERN stack development, with
-            experience in building full-stack applications and Machine Learning
-            models.
-          </p>
-          <a
-            href={cv}
-            download="cv-PDF-document"
-            target="_blank"
-            rel="noopener noreferrer"
+      </motion.nav>
+
+      {/* Mobile Menu */}
+      <AnimatePresence>
+        {menuOpen && (
+          <motion.ul
+            className={`${style.menu} ${menuOpen ? style.open : ""}`}
+            initial={{ opacity: 0, y: "-100%" }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: "-100%" }}
+            transition={{ type: "tween", duration: 0.4, ease: "easeInOut" }}
           >
-            <DownloadButton>Download CV</DownloadButton>
-          </a>
-        </div>
-        <div className={style["scroll-icon"]}>
-          <div
-            className={style["scroll-down"]}
-            style={{ color: "skyblue !important" }}
+            {["Home", "About", "Projects", "Contact"].map((item) => (
+              <motion.li
+                key={item}
+                variants={itemVariant} // Reuse item variant for consistency
+                whileHover={{ x: 10, color: "var(--primary-color)" }}
+                whileTap={{ scale: 0.9 }}
+              >
+                <a href={`#${item}`} onClick={handleMenuLinkClick}>
+                  {item}
+                </a>
+              </motion.li>
+            ))}
+          </motion.ul>
+        )}
+      </AnimatePresence>
+
+      {/* Contact Navigation (Side Social Links) */}
+      <motion.div
+        className={style["contact-nav"]}
+        initial={{ x: -100, opacity: 0 }}
+        animate={{ x: 0, opacity: 1 }}
+        transition={{ delay: 1, duration: 0.7, type: "spring", stiffness: 50 }}
+      >
+        <motion.a
+          href="https://github.com/Balu2200"
+          target="_blank"
+          rel="noopener noreferrer"
+          whileHover={{ scale: 1.15 }}
+          whileTap={{ scale: 0.9 }}
+        >
+          <AiFillGithub />
+        </motion.a>
+        <motion.a
+          href="https://www.linkedin.com/in/balupasumarthi2200/"
+          target="_blank"
+          rel="noopener noreferrer"
+          whileHover={{ scale: 1.15 }}
+          whileTap={{ scale: 0.9 }}
+        >
+          <AiFillLinkedin />
+        </motion.a>
+        <motion.a
+          href="https://leetcode.com/u/BALU_PASUMARTHI3/"
+          target="_blank"
+          rel="noopener noreferrer"
+          whileHover={{ scale: 1.15 }}
+          whileTap={{ scale: 0.9 }}
+        >
+          <FaCode />
+        </motion.a>
+        <motion.a
+          href="https://www.codechef.com/users/balupasumarthi"
+          target="_blank"
+          rel="noopener noreferrer"
+          whileHover={{ scale: 1.15 }}
+          whileTap={{ scale: 0.9 }}
+        >
+          <FaLaptopCode />
+        </motion.a>
+        <motion.a
+          href="https://takeuforward.org/plus/profile/Balu%20pasumarthi"
+          target="_blank"
+          rel="noopener noreferrer"
+          whileHover={{ scale: 1.15 }}
+          whileTap={{ scale: 0.9 }}
+        >
+          <FaBook />
+        </motion.a>
+      </motion.div>
+
+      {/* Home Section */}
+      <AnimatedSection id="Home" className={style.home}>
+        <motion.div
+          className={style["home-content"]}
+          variants={staggerContainerVariant} // Apply stagger to children
+          initial="hidden"
+          animate="visible"
+        >
+          <motion.h1 variants={itemVariant}>
+            Hi, I am <span>Balu Pasumarthi</span>
+          </motion.h1>
+          <motion.p variants={itemVariant}>
+            A passionate B.Tech Computer Science student specializing in Data
+            Structures, Machine Learning, and MERN stack development. Proven
+            experience in building impactful full-stack applications and
+            innovative Machine Learning models.
+          </motion.p>
+          <motion.div
+            variants={itemVariant}
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
           >
-            <div className={style.chevrons}>
-              <div className={style["chevron-down"]}></div>
-              <div className={style["chevron-down"]}></div>
-            </div>
+            <DownloadButton href={cv} download="BaluPasumarthi_CV.pdf">
+              Download CV
+            </DownloadButton>
+          </motion.div>
+        </motion.div>
+        <motion.div
+          className={style["scroll-icon"]}
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 1.5, duration: 0.8 }}
+        >
+          <div className={style.chevrons}>
+            <div className={style["chevron-down"]}></div>
+            <div className={style["chevron-down"]}></div>
           </div>
-        </div>
-        <div className={style["contact-nav"]}>
-          <a
-            className={style.github}
-            target="_blank"
-            href="https://github.com/Balu2200"
-          >
-            <AiFillGithub size="30px" color="black" />
-          </a>
-          <a
-            className={style.linkedin}
-            target="_blank"
-            href="https://www.linkedin.com/in/balupasumarthi2200/"
-          >
-            <AiFillLinkedin size="30px" color="black" />
-          </a>
-          <a
-            className={style.linkedin}
-            target="_blank"
-            href="https://leetcode.com/u/BALU_PASUMARTHI3/"
-          >
-            <FaCode size="30px" color="black" />
-          </a>
-          <a
-            className={style.linkedin}
-            target="_blank"
-            href="https://www.codechef.com/users/balupasumarthi"
-          >
-            <FaLaptopCode size="30px" color="black" />
-          </a>
-          <a
-            className={style.linkedin}
-            target="_blank"
-            href="https://takeuforward.org/plus/profile/Balu%20pasumarthi"
-          >
-            <FaBook size="30px" color="black" />
-          </a>
-        </div>
-      </div>
-      {/* About */}
-      <div id="About" className={style.about}>
+        </motion.div>
+      </AnimatedSection>
+
+      {/* About Section */}
+      <AnimatedSection id="About" className={style.about}>
         <div className={style.container}>
           <h2 className={style.title}>About Me</h2>
-          <p>
-            Here you will find more information about me, what I do, and my
-            current skills mostly in terms of programming and technology
+          <p className={style["section-description"]}>
+            Discover more about my journey, my approach to technology, and the
+            skills I bring to the table.
           </p>
           <div className={style["about-content"]}>
-            <div className={style["about-info"]}>
+            <motion.div
+              className={style["about-image-container"]}
+              variants={itemVariant} // You can create a specific variant if needed
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, amount: 0.3 }}
+            >
+              <img
+                src={profilePhoto}
+                alt="Balu Pasumarthi"
+                className={style["profile-photo"]}
+              />
+            </motion.div>
+            <motion.div className={style["about-info"]} variants={itemVariant}>
               <h3>Get to know me!</h3>
               <p>
-                I'm Balu Pasumarthi, a B.Tech Computer Science student at
-                Gayatri Vidya Parishad with a passion for problem-solving, Data
-                Structures, Machine Learning, MERN stack development,
-                GenerativeAI. I recently won first place at an IIT Kharagpur
-                hackathon for creating an AI-based Video Proctoring Analysis
-                system to detect cheating. I have hands-on experience in
-                building full-stack applications and enjoy working on real-world
-                projects. My strengths include punctuality, reliability,
-                teamwork, and a strong commitment to learning and innovation.
-                Excited to apply my skills to new challenges!
+                As a dedicated B.Tech Computer Science student at Gayatri Vidya
+                Parishad, I possess a strong foundation in software engineering
+                principles, with specialized expertise in Data Structures,
+                Algorithms, Machine Learning, MERN stack development, and
+                Generative AI.
               </p>
-            </div>
-            <div className={style["my-skill"]}>
+              <p>
+                My practical skills are evidenced by a first-place victory at an
+                IIT Kharagpur hackathon, where I led the development of an
+                innovative AI-driven Video Proctoring Analysis system. I am
+                adept at translating complex problems into robust, scalable
+                full-stack applications and thrive in environments that demand
+                continuous learning and practical application of technology.
+              </p>
+              <p>
+                Key attributes include a proactive approach to problem-solving,
+                a proven ability to deliver reliable results, and a
+                collaborative spirit. I am eager to contribute my technical
+                proficiency and commitment to innovation to a challenging and
+                growth-oriented role.
+              </p>
+            </motion.div>
+            <motion.div
+              className={`${style["my-skill"]} ${style["full-width-skill-area"]}`}
+              variants={itemVariant}
+              style={{ gridColumn: "1 / -1" }}
+            >
+              {" "}
+              {/* Make skills span full width below image and text */}
               <h3>My Skills</h3>
-              <div className={style.skills}>
-                {skills.map((skill, index) => {
-                  return (
-                    <div
-                      key={`skill${index}`}
-                      className={`${style.skill} ${style[skill.cssName]}`}
-                    >
-                      <div className={style["skill-name"]}>{skill.name}</div>
-                      <div className={style["skill-icon"]}>{skill.icon}</div>
-                    </div>
-                  );
-                })}
-              </div>
-            </div>
+              {/* SDE Skills Section */}
+              <h4 className={style["skill-subsection-title"]}>
+                Software Development
+              </h4>
+              <motion.div
+                className={style.skills}
+                variants={staggerContainerVariant}
+              >
+                {sdeSkills.map((skill) => (
+                  <motion.div
+                    key={skill.name}
+                    className={`${style.skill} ${style[skill.cssName] || ""}`}
+                    variants={itemVariant}
+                    whileHover={{
+                      y: -7,
+                      backgroundColor: "var(--primary-light)",
+                      color: "white",
+                      boxShadow: "0 6px 12px rgba(0,0,0,0.1)",
+                      scale: 1.05,
+                    }}
+                    transition={{ type: "spring", stiffness: 300, damping: 15 }}
+                  >
+                    {skill.icon && (
+                      <span className={style["skill-icon"]}>{skill.icon}</span>
+                    )}
+                    {skill.name}
+                  </motion.div>
+                ))}
+              </motion.div>
+              {/* ML/AI Skills Section */}
+              <h4
+                className={style["skill-subsection-title"]}
+                style={{ marginTop: "2rem" }}
+              >
+                Machine Learning & AI
+              </h4>
+              <motion.div
+                className={style.skills}
+                variants={staggerContainerVariant}
+              >
+                {mlAiSkills.map((skill) => (
+                  <motion.div
+                    key={skill.name}
+                    className={`${style.skill} ${style[skill.cssName] || ""}`}
+                    variants={itemVariant}
+                    whileHover={{
+                      y: -7,
+                      backgroundColor: "var(--accent-color)",
+                      color: "white",
+                      boxShadow: "0 6px 12px rgba(0,0,0,0.1)",
+                      scale: 1.05,
+                    }}
+                    transition={{ type: "spring", stiffness: 300, damping: 15 }}
+                  >
+                    {skill.icon && (
+                      <span className={style["skill-icon"]}>{skill.icon}</span>
+                    )}
+                    {skill.name}
+                  </motion.div>
+                ))}
+              </motion.div>
+            </motion.div>
           </div>
         </div>
-      </div>
-      {/* Projects */}
-      <div id="Projects" className={style.projects}>
+      </AnimatedSection>
+
+      {/* Projects Section */}
+      <AnimatedSection id="Projects" className={style.projects}>
         <div className={style.container}>
-          <h2 className={style.title}>Projects</h2>
-          <p>
-            Here you will find some of the personal projects in Web-Development,
-            Machine Learning
+          <h2 className={style.title}>My Projects</h2>
+          <p className={style["section-description"]}>
+            A selection of projects that showcase my skills in web development,
+            AI, and problem-solving.
           </p>
-          <div className={style["projects-list"]}>
-            {projects.map((project, index) => {
-              return (
-                <div key={`project${index}`} className={style.project}>
-                  <div className={style["project-image"]}>
-                    <img src={project.image} alt="Project Image" />
-                  </div>
-                  <div className={style["project-info"]}>
-                    <h3>{project.name}</h3>
-                    <p>{project.description}</p>
-                    <div className={style["project-buttons"]}>
-                      <IconButton
-                        width="170px"
-                        height="50px"
-                        backgroundColor="var(--primary-main)"
-                        color="white"
-                        link={project.link}
-                        icon={<AiOutlineEye size="25px" color="white" />}
+          <motion.div
+            className={style["projects-list"]}
+            variants={staggerContainerVariant}
+          >
+            {projects.map((project, index) => (
+              <motion.div
+                key={project.name + index} // Ensure unique key
+                className={style.project}
+                variants={itemVariant}
+                // whileHover effect is handled by CSS for transform, JS for other potential interactions
+              >
+                <div className={style["project-image"]}>
+                  <img src={project.image} alt={project.name} />
+                </div>
+                <div className={style["project-info"]}>
+                  <h3>{project.name}</h3>
+                  <p>{project.description}</p>
+                  {/* Optional: Add project tags here */}
+                  {/* <div className={style["project-tags"]}>
+                    {project.tags && project.tags.map(tag => <span key={tag} className={style.tag}>{tag}</span>)}
+                  </div> */}
+                  <div className={style["project-buttons"]}>
+                    <motion.div
+                      whileHover={{ scale: 1.05 }}
+                      whileTap={{ scale: 0.95 }}
+                    >
+                      <a
+                        href={project.link}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className={style["project-button-link"]}
                       >
-                        Live Demo
-                      </IconButton>
-                      <IconButton
-                        width="100px"
-                        height="50px"
-                        backgroundColor="black"
-                        color="white"
-                        link={project.github}
-                        icon={<AiFillGithub size="25px" color="white" />}
+                        <IconButton>
+                          <AiOutlineEye /> Live Demo
+                        </IconButton>
+                      </a>
+                    </motion.div>
+                    <motion.div
+                      whileHover={{ scale: 1.05 }}
+                      whileTap={{ scale: 0.95 }}
+                    >
+                      <a
+                        href={project.github}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className={style["project-button-link"]}
                       >
-                        Github
-                      </IconButton>
-                    </div>
+                        <IconButton>
+                          <AiFillGithub /> GitHub
+                        </IconButton>
+                      </a>
+                    </motion.div>
                   </div>
                 </div>
-              );
-            })}
-          </div>
+              </motion.div>
+            ))}
+          </motion.div>
         </div>
-      </div>
-      {/* Contact */}
-      <div id="Contact" className={style.contact}>
+      </AnimatedSection>
+
+      {/* Contact Section */}
+      <AnimatedSection id="Contact" className={style.contact}>
         <div className={style.container}>
-          <h2 className={style.title}>Contact</h2>
-          <p>
-            Feel free to Contact me by submitting the form below and I will get
-            back to you as soon as possible
+          <h2 className={style.title}>Get In Touch</h2>
+          <p className={style["section-description"]}>
+            Have a project in mind or just want to connect? Feel free to reach
+            out!
           </p>
-          <form
+          <motion.form
             ref={form}
             onSubmit={sendEmail}
-            className={clsx({ [style["inactive-form"]]: loading })}
+            variants={itemVariant} // Animate the form as a whole
+            className={loading ? style["form-loading"] : ""}
           >
             <InputField
-              width="700px"
-              height="40px"
-              name="name"
-              placeholder="Enter Your Name"
-              label="Name"
               type="text"
+              name="user_name"
+              placeholder="Your Name"
+              required
             />
             <InputField
-              width="700px"
-              height="40px"
-              name="email"
-              placeholder="Enter Your Email"
-              label="Email"
               type="email"
+              name="user_email"
+              placeholder="Your Email"
+              required
             />
-            <TextAreaField
-              width="700px"
-              height="250px"
-              name="message"
-              placeholder="Enter Your Message"
-              label="Message"
-              type="text"
-            />
-            <SubmitButton
-              icon={<RiSendPlaneFill size="20px" color="white" />}
-              width="200px"
-              height="60px"
-              color="white"
-              backgroundColor="var(--primary-main)"
-            >
-              Submit
-            </SubmitButton>
-            {loading && (
-              <div className={style.loader}>
-                <Loader />
-              </div>
+            <TextAreaField name="message" placeholder="Your Message" required />
+            <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+              <SubmitButton type="submit" disabled={loading}>
+                {loading ? (
+                  <Loader />
+                ) : (
+                  <span
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                    }}
+                  >
+                    <RiSendPlaneFill style={{ marginRight: "8px" }} /> Send
+                    Message
+                  </span>
+                )}
+              </SubmitButton>
+            </motion.div>
+            {emailSent && (
+              <motion.p
+                className={style["form-success-message"]}
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: 10 }}
+              >
+                Your message has been sent successfully!
+              </motion.p>
             )}
-          </form>
+          </motion.form>
         </div>
-      </div>
-      {/* footer */}
-      <div className={style.footer}>
+      </AnimatedSection>
+
+      {/* Footer */}
+      <footer className={style.footer}>
         <div className={style.container}>
           <div className={style["footer-info"]}>
-            <div>
+            <motion.div variants={itemVariant}>
               <h3>Balu Pasumarthi</h3>
               <p>
-                Balu Pasumarthi, a B.Tech Computer Science student, very good at
-                Data Structures Machine Learning and MERN stack development,
-                with experience in building full-stack applications.
+                Ambitious Computer Science student crafting innovative digital
+                experiences with a focus on full-stack development and Machine
+                Learning.
               </p>
-            </div>
-            <div className={style.social}>
-              <h3>Social</h3>
-              <div className="">
+            </motion.div>
+            <motion.div className={style.social} variants={itemVariant}>
+              <h3>Connect With Me</h3>
+              <div>
                 <a
-                  className={style.git}
-                  target="_blank"
                   href="https://github.com/Balu2200"
+                  target="_blank"
+                  rel="noopener noreferrer"
                 >
-                  <AiFillGithub size="30px" color="white" />
+                  <AiFillGithub />
                 </a>
                 <a
-                  className={style.linkedin}
-                  target="_blank"
                   href="https://www.linkedin.com/in/balupasumarthi2200/"
+                  target="_blank"
+                  rel="noopener noreferrer"
                 >
-                  <AiFillLinkedin size="30px" color="white" />
+                  <AiFillLinkedin />
                 </a>
+                {/* Add more social links if needed */}
+              </div>
+              <p style={{ marginTop: "1rem" }}>
                 <a href="mailto:balupasumarthi1@gmail.com">
                   balupasumarthi1@gmail.com
                 </a>
-              </div>
-            </div>
+              </p>
+            </motion.div>
           </div>
+          <motion.div className={style["copy-right"]} variants={itemVariant}>
+            <span>
+              &copy; {new Date().getFullYear()} Balu Pasumarthi. All rights
+              reserved.
+            </span>
+          </motion.div>
         </div>
-      </div>
+      </footer>
     </div>
   );
 }
