@@ -71,7 +71,7 @@ const mlAiSkills = [
 const projects = [
   {
     name: "PaySwift",
-    link: "https://youtu.be/Vf2rteZizIE",
+    link: "https://pay-swift-frontend.vercel.app/",
     github: "https://github.com/Balu2200/PaySwift-Frontend",
     description:
       "A full-stack MERN payment app with Tailwind CSS, enabling money transfers, account management, transaction history, scheduled payments, and an AI chatbot.",
@@ -88,13 +88,13 @@ const projects = [
     tags: ["AI", "Python", "MediaPipe", "YOLOv4", "Tkinter"],
   },
   {
-    name: "Chat with Docs",
-    link: "https://ibrahimhiarea.github.io/Soko-Number/", // Update if this is the correct demo link
-    github: "https://github.com/Balu2200/Chat_with_PDFs",
+    name: "Food App",
+    link: "https://food-app-frontend-pearl.vercel.app/",
+    github: "https://github.com/Balu2200/BiteBuddy-Food-App",
     description:
-      "Interactive Streamlit app for uploading multiple PDFs and engaging in conversational Q&A using NLP and vector search for contextually relevant responses.",
-    image: chat,
-    tags: ["Python", "Streamlit", "NLP", "AI"],
+      "MERN stack food discovery app allowing users to search restaurants by name, location, or image uploads, with a dynamic feed of trending options.",
+    image: foodapp,
+    tags: ["React", "Node.js", "MongoDB", "Express"],
   },
   {
     name: "IPL Winning Predictor",
@@ -106,13 +106,13 @@ const projects = [
     tags: ["Python", "Streamlit", "Machine Learning"],
   },
   {
-    name: "Food App",
-    link: "https://youtu.be/n7OfJ2h7G3c",
-    github: "https://github.com/Balu2200/BiteBuddy-Food-App",
+    name: "Chat with Docs",
+    link: "https://github.com/Balu2200/Chat_with_PDFs", // Update if this is the correct demo link
+    github: "https://github.com/Balu2200/Chat_with_PDFs",
     description:
-      "MERN stack food discovery app allowing users to search restaurants by name, location, or image uploads, with a dynamic feed of trending options.",
-    image: foodapp,
-    tags: ["React", "Node.js", "MongoDB", "Express"],
+      "Interactive Streamlit app for uploading multiple PDFs and engaging in conversational Q&A using NLP and vector search for contextually relevant responses.",
+    image: chat,
+    tags: ["Python", "Streamlit", "NLP", "AI"],
   },
 ];
 
@@ -375,7 +375,7 @@ function App() {
             whileTap={{ scale: 0.95 }}
           >
             <DownloadButton href={cv} download="BaluPasumarthi_CV.pdf">
-              Download CV
+              My Resume
             </DownloadButton>
           </motion.div>
         </motion.div>
