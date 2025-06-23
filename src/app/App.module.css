@@ -586,42 +586,39 @@ section {
 .project-buttons {
   display: flex;
   gap: 1rem;
-  margin-top: auto; /* Pushes buttons to bottom */
+  margin-top: 1.25rem;
+  flex-wrap: wrap;
+  align-items: center;
 }
 
-/* Styling for IconButtons specifically within project-buttons */
-.project-buttons > div > button, /* Assuming IconButton renders a button */
-.project-buttons > div > a {
-  /* Assuming IconButton renders an anchor or is wrapped by one */
+.project-button-link {
+  text-decoration: none;
+  display: inline-flex;
+}
+
+.project-button-link button {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  padding: 0.65rem 1.25rem; /* Adjusted padding for better dimensions */
-  font-size: clamp(0.8rem, 1.5vw, 0.9rem); /* Slightly smaller font */
-  font-weight: 500;
+  padding: 0.9rem 1.9rem;
+  font-size: 0.9rem;
+  font-weight: 600;
   border-radius: var(--border-radius-md);
-  text-decoration: none;
-  cursor: pointer;
-  transition: all 0.2s ease-out;
-  border: 1px solid var(--border-color);
-  background-color: var(--card-bg-color);
+  border: 1px solid var(--primary-color);
+  background-color: transparent;
   color: var(--primary-color);
+  transition: background-color 0.3s ease, color 0.3s ease;
+  cursor: pointer;
 }
 
-.project-buttons > div > button svg,
-.project-buttons > div > a svg {
-  margin-right: 0.5rem;
-  font-size: 1.1em;
-}
-
-.project-buttons > div > button:hover,
-.project-buttons > div > a:hover {
+.project-button-link button:hover {
   background-color: var(--primary-color);
   color: white;
-  border-color: var(--primary-color);
   box-shadow: var(--shadow-md);
-  transform: translateY(-2px);
 }
+
+
+
 
 /* Contact Section */
 .contact {
@@ -820,17 +817,27 @@ section {
   }
 }
 
-/* Add this class for form success messages */
 .form-success-message {
   text-align: center;
-  color: green; /* Or your preferred success color */
+  color: green;
   font-weight: 500;
-  margin-top: 1rem;
+  background-color: #e6fffa;
+  border: 1px solid #38a169;
   padding: 0.75rem;
-  background-color: #e6fffa; /* Light green background */
-  border: 1px solid #38a169; /* Green border */
-  border-radius: var(--border-radius-md);
+  margin-top: 1rem;
+  border-radius: 8px;
 }
+
+.form-error-message {
+  text-align: center;
+  color: #c53030;
+  background-color: #fff5f5;
+  border: 1px solid #fc8181;
+  padding: 0.75rem;
+  margin-top: 1rem;
+  border-radius: 8px;
+}
+
 
 /* Optional: Style for form loading state if you want to disable pointer events on the whole form */
 .form-loading {

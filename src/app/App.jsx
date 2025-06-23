@@ -79,7 +79,7 @@ const projects = [
     tags: ["React", "Node.js", "MongoDB", "Express", "AI"],
   },
   {
-    name: `Exam Proctoring (1st Place Winner)`, // Highlight achievement
+    name: `Exam Proctoring (1st Place Winner)`, 
     link: "https://youtu.be/ljOCpotcnd0",
     github: "https://github.com/Balu2200/Video_Proctorer",
     description:
@@ -176,6 +176,7 @@ function App() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [loading, setLoading] = useState(false);
   const [emailSent, setEmailSent] = useState(false);
+  const [error, setError] = useState(""); 
 
   const sendEmail = (e) => {
     e.preventDefault();
@@ -184,10 +185,10 @@ function App() {
 
     emailjs
       .sendForm(
-        "service_gjbmeus", // Replace with your EmailJS Service ID
-        "template_qk6p0pa", // Replace with your EmailJS Template ID
+        "service_gjbmeus", 
+        "template_qk6p0pa", 
         form.current,
-        "HDMwz57k3xrihLg4J" // Replace with your EmailJS Public Key (User ID)
+        "HDMwz57k3xrihLg4J" 
       )
       .then(
         (result) => {
@@ -374,7 +375,7 @@ function App() {
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
           >
-            <DownloadButton href={cv} download="BaluPasumarthi_CV.pdf">
+            <DownloadButton href={cv} download="cv.pdf">
               My Resume
             </DownloadButton>
           </motion.div>
@@ -543,36 +544,26 @@ function App() {
                     {project.tags && project.tags.map(tag => <span key={tag} className={style.tag}>{tag}</span>)}
                   </div> */}
                   <div className={style["project-buttons"]}>
-                    <motion.div
-                      whileHover={{ scale: 1.05 }}
-                      whileTap={{ scale: 0.95 }}
+                    <a
+                      href={project.link}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className={style["project-button-link"]}
                     >
-                      <a
-                        href={project.link}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className={style["project-button-link"]}
-                      >
-                        <IconButton>
-                          <AiOutlineEye /> Live Demo
-                        </IconButton>
-                      </a>
-                    </motion.div>
-                    <motion.div
-                      whileHover={{ scale: 1.05 }}
-                      whileTap={{ scale: 0.95 }}
+                      <IconButton>
+                        Link
+                      </IconButton>
+                    </a>
+                    <a
+                      href={project.github}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className={style["project-button-link"]}
                     >
-                      <a
-                        href={project.github}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className={style["project-button-link"]}
-                      >
-                        <IconButton>
-                          <AiFillGithub /> GitHub
-                        </IconButton>
-                      </a>
-                    </motion.div>
+                      <IconButton>
+                        GitHub
+                      </IconButton>
+                    </a>
                   </div>
                 </div>
               </motion.div>
@@ -581,7 +572,6 @@ function App() {
         </div>
       </AnimatedSection>
 
-      {/* Contact Section */}
       <AnimatedSection id="Contact" className={style.contact}>
         <div className={style.container}>
           <h2 className={style.title}>Get In Touch</h2>
@@ -589,10 +579,11 @@ function App() {
             Have a project in mind or just want to connect? Feel free to reach
             out!
           </p>
+
           <motion.form
             ref={form}
             onSubmit={sendEmail}
-            variants={itemVariant} // Animate the form as a whole
+            variants={itemVariant}
             className={loading ? style["form-loading"] : ""}
           >
             <InputField
@@ -608,32 +599,37 @@ function App() {
               required
             />
             <TextAreaField name="message" placeholder="Your Message" required />
-            <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-              <SubmitButton type="submit" disabled={loading}>
+
+            <motion.div whileHover={{ scale: 1.0 }} whileTap={{ scale: 0.95 }}>
+              <button type="submit" disabled={loading}>
                 {loading ? (
                   <Loader />
                 ) : (
-                  <span
-                    style={{
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center",
-                    }}
-                  >
-                    <RiSendPlaneFill style={{ marginRight: "8px" }} /> Send
-                    Message
+                  <span className={style["submit-button-content"]}>
+                    <RiSendPlaneFill style={{ marginRight: "8px" }} />
+                    Send Message
                   </span>
                 )}
-              </SubmitButton>
+              </button>
             </motion.div>
+
             {emailSent && (
               <motion.p
                 className={style["form-success-message"]}
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: 10 }}
               >
-                Your message has been sent successfully!
+                ✅ Your message has been sent successfully!
+              </motion.p>
+            )}
+
+            {error && (
+              <motion.p
+                className={style["form-error-message"]}
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+              >
+                ❌ {error}
               </motion.p>
             )}
           </motion.form>
