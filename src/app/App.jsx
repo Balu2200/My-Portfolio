@@ -375,9 +375,28 @@ function App() {
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
           >
-            <DownloadButton href={cv} download="cv.pdf">
+            <button
+              onClick={() =>
+                window.open(
+                  "https://drive.google.com/file/d/1L_EC-b0D0wljgN12bS8K50Wx8c35o0VD/view?usp=drive_link",
+                  "_blank"
+                )
+              }
+              style={{
+                padding: "0.5rem 1rem",
+                backgroundColor: "#2563eb",
+                color: "#ffffff",
+                borderRadius: "0.5rem",
+                boxShadow: "0 1px 3px rgba(0, 0, 0, 0.2)",
+                transition: "background-color 0.3s",
+                border: "none",
+                cursor: "pointer",
+              }}
+              onMouseOver={(e) => (e.target.style.backgroundColor = "#1d4ed8")} 
+              onMouseOut={(e) => (e.target.style.backgroundColor = "#2563eb")}
+            >
               My Resume
-            </DownloadButton>
+            </button>
           </motion.div>
         </motion.div>
         <motion.div
@@ -550,9 +569,7 @@ function App() {
                       rel="noopener noreferrer"
                       className={style["project-button-link"]}
                     >
-                      <IconButton>
-                        Link
-                      </IconButton>
+                      <IconButton>Link</IconButton>
                     </a>
                     <a
                       href={project.github}
@@ -560,9 +577,7 @@ function App() {
                       rel="noopener noreferrer"
                       className={style["project-button-link"]}
                     >
-                      <IconButton>
-                        GitHub
-                      </IconButton>
+                      <IconButton>GitHub</IconButton>
                     </a>
                   </div>
                 </div>
