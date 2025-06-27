@@ -334,7 +334,7 @@ function App() {
           <FaCode />
         </motion.a>
         <motion.a
-          href="https://www.codechef.com/users/balupasumarthi"
+          href="https://www.codechef.com/users/balu_47"
           target="_blank"
           rel="noopener noreferrer"
           whileHover={{ scale: 1.15 }}
