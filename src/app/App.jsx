@@ -378,8 +378,7 @@ function App() {
             <button
               onClick={() =>
                 window.open(
-                  "https://drive.google.com/file/d/1L_EC-b0D0wljgN12bS8K50Wx8c35o0VD/view?usp=drive_link",
-                  "_blank"
+                  "https://drive.google.com/file/d/1qr5Lbnm3pHPl_4dvR1XylpfBB2-e6q7e/view?usp=drive_link"
                 )
               }
               style={{
@@ -392,7 +391,7 @@ function App() {
                 border: "none",
                 cursor: "pointer",
               }}
-              onMouseOver={(e) => (e.target.style.backgroundColor = "#1d4ed8")} 
+              onMouseOver={(e) => (e.target.style.backgroundColor = "#1d4ed8")}
               onMouseOut={(e) => (e.target.style.backgroundColor = "#2563eb")}
             >
               My Resume
