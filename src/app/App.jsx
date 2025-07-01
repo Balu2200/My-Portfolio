@@ -378,7 +378,7 @@ function App() {
             <button
               onClick={() =>
                 window.open(
-                  "https://drive.google.com/file/d/1IT1JbculpgKrcuVN6F-Yah3Drg6aoXa7/view?usp=drive_link"
+                  "https://drive.google.com/file/d/17s5SMCuiudKmK5BuG2Cj_ag5R0wOj9CB/view?usp=drive_link"
                 )
               }
               style={{
