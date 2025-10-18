@@ -1,37 +1,46 @@
-.input-field{
-    display: flex;
-    flex-direction: column;
-    justify-content: start;
-    gap: 10px;
+.input-field {
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  gap: 0.5rem;
 }
 
-.input-field > label{
-    color: #666;
-    font-size: 16px;
-    letter-spacing: 1px;
-    font-weight: 700;
-    text-align: left;
+.input-field > label {
+  color: var(--text-secondary);
+  font-size: 0.9375rem;
+  font-weight: 600;
+  text-align: left;
+  letter-spacing: -0.2px;
 }
 
-.input-field > label::first-letter{
-    text-transform: uppercase;
+.input-field > label::first-letter {
+  text-transform: uppercase;
 }
 
-.input-field > input{
-    width: 100%;
-    outline: none;
-    border: none;
-    border-radius: 5px;
-    padding: 30px 20px;
-    color: #999;
-    background-color: #f0f0f0;
-    font-weight: 600;
-    display: flex;
+.input-field > input {
+  width: 100%;
+  outline: none;
+  border: 1px solid var(--border-glass);
+  border-radius: var(--radius-md);
+  padding: 1rem 1.25rem;
+  color: var(--text-primary);
+  background: rgba(26, 26, 36, 0.5);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  font-weight: 500;
+  font-size: 0.9375rem;
+  display: flex;
+  transition: all var(--transition-base);
 }
 
-
-.input-field > input::placeholder{
-    color: #999;
-    font-weight: 500;
+.input-field > input:focus {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(168, 85, 247, 0.2),
+    0 0 20px rgba(168, 85, 247, 0.3);
+  background: rgba(26, 26, 36, 0.7);
 }
 
+.input-field > input::placeholder {
+  color: var(--text-muted);
+  font-weight: 400;
+}

@@ -5,30 +5,165 @@
 }
 
 :root {
-  /* primary */
-  --primary-main: #6200ea; /* Vibrant purple */
-  --primary-light: #7c4dff; /* Lighter purple shade */
-  --word-color: #2d3748; /* Dark gray for text */
-  --title-color: #1a202c; /* Near-black for headings */
-  --back-ground-color: #f7fafc; /* Light gray background */
-  --paragraph-color: #4a5568; /* Medium gray for paragraphs */
+  /* === DARK GLASSY DESIGN SYSTEM === */
 
-  /* icons color */
-  --html-color: #e34c26; /* HTML5 orange (unchanged) */
-  --css-color: #2965f1; /* Modern CSS blue */
-  --java-script-color: #f7df1e; /* JavaScript yellow */
-  --react-color: #61dafb; /* React cyan (unchanged) */
-  --redux-color: #764abc; /* Redux purple (unchanged) */
-  --github-color: #181717; /* GitHub dark gray */
-  --git-color: #f05033; /* Git orange */
-  --java-color: #007396; /* Java teal */
-  --cpp-color: #00599c; /* C++ blue */
-  --facebook-color: #3b5998; /* Facebook blue */
-  --linked-in-color: #0a66c2; /* LinkedIn blue */
-  --gmail-color: #d14836; /* Gmail red */
-  --type-script-color: #3178c6; /* TypeScript blue */
-  --recoil-color: #3578e5; /* Recoil blue (unchanged) */
-  --react-query-color: #ff4154; /* React Query red */
+  /* Primary Color - Cyber Purple */
+  --primary: #a855f7;
+  --primary-light: #c084fc;
+  --primary-dark: #9333ea;
+
+  /* Secondary Color - Electric Blue */
+  --secondary: #3b82f6;
+  --secondary-light: #60a5fa;
+  --secondary-dark: #2563eb;
+
+  /* Accent Color - Neon Cyan */
+  --accent: #06b6d4;
+  --accent-light: #22d3ee;
+  --accent-dark: #0891b2;
+
+  /* Dark Background Shades */
+  --bg-primary: #0a0a0f;
+  --bg-secondary: #13131a;
+  --bg-tertiary: #1a1a24;
+  --bg-glass: rgba(26, 26, 36, 0.7);
+  --bg-glass-heavy: rgba(26, 26, 36, 0.9);
+
+  /* Neutral Shades (Dark Theme) */
+  --neutral-50: #1a1a24;
+  --neutral-100: #23232f;
+  --neutral-200: #2d2d3a;
+  --neutral-300: #3e3e4e;
+  --neutral-400: #6b6b7b;
+  --neutral-500: #9494a4;
+  --neutral-600: #b4b4c4;
+  --neutral-700: #d4d4e4;
+  --neutral-800: #e4e4f4;
+  --neutral-900: #f4f4ff;
+
+  /* Semantic Colors */
+  --text-primary: #ffffff;
+  --text-secondary: #b4b4c4;
+  --text-muted: #9494a4;
+  --border-color: rgba(168, 85, 247, 0.2);
+  --border-glass: rgba(255, 255, 255, 0.1);
+
+  /* Glass Shadows */
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.3);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.4),
+    0 2px 4px -2px rgba(0, 0, 0, 0.3);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.5),
+    0 4px 6px -4px rgba(0, 0, 0, 0.4);
+  --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.6),
+    0 8px 10px -6px rgba(0, 0, 0, 0.5);
+  --shadow-glow: 0 0 20px rgba(168, 85, 247, 0.3);
+  --shadow-glow-strong: 0 0 30px rgba(168, 85, 247, 0.5);
+
+  /* Border Radius */
+  --radius-sm: 0.375rem;
+  --radius-md: 0.5rem;
+  --radius-lg: 0.75rem;
+  --radius-xl: 1rem;
+  --radius-2xl: 1.5rem;
+  --radius-3xl: 2rem;
+
+  /* Transitions */
+  --transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-base: 250ms cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-slow: 350ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Optional light theme; toggled via [data-theme="light"] on <html> */
+:root[data-theme="light"] {
+  --primary: #7c3aed; /* Slightly deeper purple for contrast on light */
+  --primary-light: #a78bfa;
+  --primary-dark: #6d28d9;
+
+  --secondary: #2563eb;
+  --secondary-light: #60a5fa;
+  --secondary-dark: #1d4ed8;
+
+  --accent: #0891b2;
+  --accent-light: #22d3ee;
+  --accent-dark: #0e7490;
+
+  --bg-primary: #f8fafc;
+  --bg-secondary: #f1f5f9;
+  --bg-tertiary: #e2e8f0;
+  --bg-glass: rgba(255, 255, 255, 0.7);
+  --bg-glass-heavy: rgba(255, 255, 255, 0.9);
+
+  --neutral-50: #ffffff;
+  --neutral-100: #f8fafc;
+  --neutral-200: #f1f5f9;
+  --neutral-300: #e2e8f0;
+  --neutral-400: #cbd5e1;
+  --neutral-500: #94a3b8;
+  --neutral-600: #64748b;
+  --neutral-700: #475569;
+  --neutral-800: #334155;
+  --neutral-900: #0f172a;
+
+  --text-primary: #0f172a;
+  --text-secondary: #334155;
+  --text-muted: #475569;
+  --border-color: rgba(37, 99, 235, 0.25);
+  --border-glass: rgba(15, 23, 42, 0.08);
+
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.08),
+    0 2px 4px -2px rgba(0, 0, 0, 0.06);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1),
+    0 4px 6px -4px rgba(0, 0, 0, 0.08);
+  --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1),
+    0 8px 10px -6px rgba(0, 0, 0, 0.08);
+  --shadow-glow: 0 0 20px rgba(37, 99, 235, 0.25);
+  --shadow-glow-strong: 0 0 30px rgba(37, 99, 235, 0.4);
+}
+
+/* Respect user's system preference on first load; dark remains default */
+@media (prefers-color-scheme: light) {
+  :root:not([data-theme="dark"]) {
+    /* Only apply if user hasn't explicitly set dark */
+    --primary: #7c3aed;
+    --primary-light: #a78bfa;
+    --primary-dark: #6d28d9;
+    --secondary: #2563eb;
+    --secondary-light: #60a5fa;
+    --secondary-dark: #1d4ed8;
+    --accent: #0891b2;
+    --accent-light: #22d3ee;
+    --accent-dark: #0e7490;
+    --bg-primary: #f8fafc;
+    --bg-secondary: #f1f5f9;
+    --bg-tertiary: #e2e8f0;
+    --bg-glass: rgba(255, 255, 255, 0.7);
+    --bg-glass-heavy: rgba(255, 255, 255, 0.9);
+    --neutral-50: #ffffff;
+    --neutral-100: #f8fafc;
+    --neutral-200: #f1f5f9;
+    --neutral-300: #e2e8f0;
+    --neutral-400: #cbd5e1;
+    --neutral-500: #94a3b8;
+    --neutral-600: #64748b;
+    --neutral-700: #475569;
+    --neutral-800: #334155;
+    --neutral-900: #0f172a;
+    --text-primary: #0f172a;
+    --text-secondary: #334155;
+    --text-muted: #475569;
+    --border-color: rgba(37, 99, 235, 0.25);
+    --border-glass: rgba(15, 23, 42, 0.08);
+    --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.08),
+      0 2px 4px -2px rgba(0, 0, 0, 0.06);
+    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1),
+      0 4px 6px -4px rgba(0, 0, 0, 0.08);
+    --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1),
+      0 8px 10px -6px rgba(0, 0, 0, 0.08);
+    --shadow-glow: 0 0 20px rgba(37, 99, 235, 0.25);
+    --shadow-glow-strong: 0 0 30px rgba(37, 99, 235, 0.4);
+  }
 }
 
 html {
@@ -37,14 +172,45 @@ html {
 }
 
 body {
-  font-family: 'Inter', sans-serif; /* Modern, clean font */
-  color: var(--word-color);
-  background-color: var(--back-ground-color);
+  font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto",
+    sans-serif;
+  color: var(--text-primary);
+  background-color: var(--bg-primary);
+  background-image: radial-gradient(
+      at 0% 0%,
+      color-mix(in oklab, var(--primary) 50%, transparent) 0px,
+      transparent 50%
+    ),
+    radial-gradient(
+      at 100% 0%,
+      color-mix(in oklab, var(--secondary) 50%, transparent) 0px,
+      transparent 50%
+    ),
+    radial-gradient(
+      at 100% 100%,
+      color-mix(in oklab, var(--accent) 50%, transparent) 0px,
+      transparent 50%
+    ),
+    radial-gradient(
+      at 0% 100%,
+      color-mix(in oklab, var(--primary) 50%, transparent) 0px,
+      transparent 50%
+    );
+  background-attachment: fixed;
+  line-height: 1.6;
+  font-size: 16px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 a {
   text-decoration: none;
-  color: var(--primary-main); /* Links use primary color */
+  color: var(--secondary);
+  transition: color var(--transition-base);
+}
+
+a:hover {
+  color: var(--secondary-dark);
 }
 
 ul {

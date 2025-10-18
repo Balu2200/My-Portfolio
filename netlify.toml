@@ -1,0 +1,7 @@
+[build]
+  functions = "netlify/functions"
+
+[[redirects]]
+  from = "/api/coding-profiles"
+  to = "/.netlify/functions/getProfiles"
+  status = 200
