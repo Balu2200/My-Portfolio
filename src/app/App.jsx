@@ -759,7 +759,7 @@ function App() {
                   <b>1600+</b> Max Rating
                 </span>
                 <a
-                  href="https://www.codechef.com/users/balu_47"
+                  href="https://www.codechef.com/users/balupasumarthi"
                   target="_blank"
                   rel="noopener noreferrer"
                   className={style["badge-link"]}
