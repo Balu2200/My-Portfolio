@@ -145,7 +145,7 @@ function App() {
     };
   }, [menuOpen]);
 
-  // Apply theme to <html>
+  
   useEffect(() => {
     const root = document.documentElement;
     if (theme === "light") {
@@ -160,7 +160,6 @@ function App() {
     }
   }, [theme]);
 
-  // Active link highlight using IntersectionObserver
   useEffect(() => {
     const sections = ["Home", "About", "Projects", "CodingProfiles", "Contact"];
     const observers = [];
@@ -189,7 +188,6 @@ function App() {
     return () => observer.disconnect();
   }, []);
 
-  // Parallax hero blobs (window-based, light weight)
   useEffect(() => {
     let raf = 0;
     let px = 0,
@@ -420,7 +418,7 @@ function App() {
         <div className={style.parallaxB} />
         <motion.div
           className={style["home-content"]}
-          variants={staggerContainerVariant} // Apply stagger to children
+          variants={staggerContainerVariant} 
           initial="hidden"
           animate="visible"
         >
@@ -698,7 +696,7 @@ function App() {
         </div>
       </AnimatedSection>
 
-      {/* Coding Profiles Section (Redesigned) */}
+      {/* Coding Profiles Section */}
       <AnimatedSection id="CodingProfiles" className={style.codingProfiles}>
         <div className={style.container}>
           <h2 className={style.title}>Coding Profiles</h2>
@@ -864,7 +862,7 @@ function App() {
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
               >
-                ❌ {error}
+                {error}
               </motion.p>
             )}
           </motion.form>
@@ -900,7 +898,6 @@ function App() {
                 >
                   <AiFillLinkedin />
                 </a>
-                {/* Add more social links if needed */}
               </div>
               <p style={{ marginTop: "1rem" }}>
                 <a href="mailto:balupasumarthi1@gmail.com">
