@@ -91,12 +91,9 @@ const projects = [
   },
 ];
 
-// Animation for progress bar
+
 const scaleX = 1;
 
-// Note: Coding profile stats are rendered statically in badges below.
-
-// Form and email logic placeholders
 const form = { current: null };
 const sendEmail = (e) => {
   e.preventDefault();
@@ -104,10 +101,9 @@ const sendEmail = (e) => {
 const loading = false;
 const error = null;
 
-// imports moved to top
 
 const mlAiSkills = [
-  { name: "Python", cssName: "python" /* icon: <FaPython /> */ },
+  { name: "Python", cssName: "python"},
   { name: "NumPy", cssName: "numpy" },
   { name: "Pandas", cssName: "pandas" },
   { name: "Matplotlib", cssName: "matplotlib" },
@@ -141,7 +137,7 @@ function App() {
       document.body.style.overflow = "unset";
     }
     return () => {
-      document.body.style.overflow = "unset"; // Cleanup on unmount
+      document.body.style.overflow = "unset"; 
     };
   }, [menuOpen]);
 
