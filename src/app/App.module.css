@@ -969,8 +969,9 @@ section {
   display: inline-flex;
 }
 
+/* Ensure buttons inside links are visible (was previously hidden) */
 .project-button-link button {
-  display: none;
+  display: inline-flex;
 }
 
 /* Modern glassy project buttons */

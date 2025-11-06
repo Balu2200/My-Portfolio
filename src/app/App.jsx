@@ -91,7 +91,6 @@ const projects = [
   },
 ];
 
-
 const scaleX = 1;
 
 const form = { current: null };
@@ -101,9 +100,8 @@ const sendEmail = (e) => {
 const loading = false;
 const error = null;
 
-
 const mlAiSkills = [
-  { name: "Python", cssName: "python"},
+  { name: "Python", cssName: "python" },
   { name: "NumPy", cssName: "numpy" },
   { name: "Pandas", cssName: "pandas" },
   { name: "Matplotlib", cssName: "matplotlib" },
@@ -137,11 +135,10 @@ function App() {
       document.body.style.overflow = "unset";
     }
     return () => {
-      document.body.style.overflow = "unset"; 
+      document.body.style.overflow = "unset";
     };
   }, [menuOpen]);
 
-  
   useEffect(() => {
     const root = document.documentElement;
     if (theme === "light") {
@@ -414,7 +411,7 @@ function App() {
         <div className={style.parallaxB} />
         <motion.div
           className={style["home-content"]}
-          variants={staggerContainerVariant} 
+          variants={staggerContainerVariant}
           initial="hidden"
           animate="visible"
         >
@@ -658,32 +655,55 @@ function App() {
                     </div>
                   )}
                   <div className={style["project-buttons"]}>
-                    <a
-                      href={project.demo}
-                      className={style["project-button-link"]}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
+                    {project.demo ? (
+                      <a
+                        href={project.demo}
+                        className={style["project-button-link"]}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        <button
+                          className={`${style["glass-btn"]} ${style["live-btn"]}`}
+                        >
+                          <span className={style["btn-dot"]}></span>
+                          Live Demo
+                        </button>
+                      </a>
+                    ) : (
                       <button
                         className={`${style["glass-btn"]} ${style["live-btn"]}`}
+                        disabled
+                        title="Live demo not available"
                       >
                         <span className={style["btn-dot"]}></span>
                         Live Demo
                       </button>
-                    </a>
-                    <a
-                      href={project.github}
-                      className={style["project-button-link"]}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
+                    )}
+
+                    {project.github ? (
+                      <a
+                        href={project.github}
+                        className={style["project-button-link"]}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        <button
+                          className={`${style["glass-btn"]} ${style["github-btn"]}`}
+                        >
+                          <span className={style["btn-dot"]}></span>
+                          GitHub
+                        </button>
+                      </a>
+                    ) : (
                       <button
                         className={`${style["glass-btn"]} ${style["github-btn"]}`}
+                        disabled
+                        title="Source not available"
                       >
                         <span className={style["btn-dot"]}></span>
                         GitHub
                       </button>
-                    </a>
+                    )}
                   </div>
                 </div>
               </motion.div>
